@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Num",
+      "birthday": "2023-06-01",
+      "phone": "09293819823",
+      "address": "123/123123",
+      "username": "isawitrh",
+      "password": "ssaaww79132541"
+    },
+    {
+      "name": "sawith",
+      "birthday": "2023-06-05",
+      "phone": "023819283",
+      "address": "823891",
+      "username": "sawith",
+      "password": "sawpiwopeuiq",
+      "id": 2
+    },
+    {
+      "name": "TUTU",
+      "birthday": "2023-06-07",
+      "phone": "1231232",
+      "address": "123123",
+      "username": "1231456",
+      "password": "6456456",
+      "id": 3
+    },
+    {
+      "name": "efwefwefwe",
+      "birthday": "2023-05-20",
+      "phone": "wefewfwef",
+      "address": "ewfewfewf",
+      "username": "wefwefwefew",
+      "password": "ewfwefwe",
+      "id": 4
+    }
+  ]
+}
