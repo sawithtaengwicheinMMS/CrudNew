@@ -7,12 +7,12 @@ export default {
 <template>
   <header>
     <nav class="navbar">
-      <div class="navbar-brand">
+      <!-- <div class="navbar-brand">
         <a class="navbar-item" href="/">
           <img class="logo" src="../assets/SUSU.jpg" alt="Logo">
         </a>
-      </div>
-      <h1>CRUD Maximum Soft</h1>
+      </div> -->
+      <h1>Maximum Soft School</h1>
       <div class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="/">หน้าหลัก</a>

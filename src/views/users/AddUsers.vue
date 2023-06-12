@@ -1,20 +1,48 @@
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+
+
 let usersdata = reactive({
-  name: "",
-  birthday:"",
-  phone:"",
+  id: "",
+  first_name: "",
+  last_name:"",
+  member_type:<any>{},
   address:"",
-  username:"",
-  password:"",
+  room:"",
+  rank:"",
 });
+
+const member_type_select = [
+{ key: 0 , value: 'member'},
+{ key: 1 , value: 'leader'},
+{ key : 2 , value:'ast'}
+]
+
+const rooms = Array.from({ length: 10 }, (_, index) => index + 1)
+
 const router = useRouter();
+
 const addNewUsers = () => {
-  axios.post("http://localhost:3000/users", usersdata).then(() => {
-    router.push("/");
-  });
+  axios.get("https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member").then((response) => {
+    const allStudent = response.data
+    const checkNameAdd = allStudent.filter((allStudent: any) => allStudent.first_name == usersdata.first_name); 
+      if (checkNameAdd.length === 0){
+        const checkRoomAdd = allStudent.filter((allStudent: any) => allStudent.room == usersdata.room); 
+        const checkMemberAdd = checkRoomAdd.filter((checkRoomAdd: any) => checkRoomAdd.member_type.key == usersdata.member_type.key); 
+          if(checkMemberAdd.length !== 0 && usersdata.member_type.value === "member" ){
+            axios.post("https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member/", usersdata).then(() => {
+            router.push("/");
+            });
+          } else if(checkMemberAdd.length === 0 && (usersdata.member_type.value === "leader" || "ast")){
+            axios.post("https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member/", usersdata).then(() => {
+            router.push("/");
+        });
+          } else {
+            alert('แต่ละห้องสามารถมีหัวหน้าและรองหัวหน้าได้อย่างละคน')
+          }
+  }else(alert('ชื่อซ้ำ'))});
 };
 </script>
 
@@ -24,28 +52,36 @@ const addNewUsers = () => {
     <form @submit.prevent="addNewUsers">
       <div class="box-con">
         <div class="mb-3">
-          <label for="name" class="form-label">ชื่อ - นามสกุล : </label>
-          <input type="text" class="form-control" id="name" v-model="usersdata.name" required>
+          <label for="name" class="form-label">ชื่อ : </label>
+          <input type="text" class="form-control" id="name" v-model="usersdata.first_name" required>
         </div>
         <div class="mb-3">
-          <label for="birthday" class="form-label">วันเกิด : </label>
-          <input type="date" class="form-control" id="birthday" v-model="usersdata.birthday" required>
+          <label for="last_name" class="form-label">นามสกุล : </label>
+          <input type="text" class="form-control" id="last_name" v-model="usersdata.last_name" required>
         </div>
         <div class="mb-3">
-          <label for="phone" class="form-label">เบอร์โทรศัพท์ : </label>
-          <input type="tel" class="form-control" id="phone" v-model="usersdata.phone" required>
+          <label for="member_type" class="form-label">ตำแหน่ง : </label>
+          <select class="form-control" id="member_type" v-model="usersdata.member_type" required>
+            <option v-for="item in member_type_select" :value="item">
+              {{item.value}}
+            </option>
+          </select>
         </div>
         <div class="mb-3">
           <label for="address" class="form-label">ที่อยู่ : </label>
-          <textarea class="form-control" id="address" v-model="usersdata.address" required></textarea>
+          <input type="text" class="form-control" id="address" v-model="usersdata.address" required>
         </div>
         <div class="mb-3">
-          <label for="username" class="form-label">Username : </label>
-          <input type="text" class="form-control" id="username" v-model="usersdata.username" required>
+          <label for="rank" class="form-label">เลขที่ : </label>
+          <input type="number" class="form-control" id="rank" v-model="usersdata.rank" required>
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Password : </label>
-          <input type="password" class="form-control" id="password" v-model="usersdata.password" required>
+          <label for="room" class="form-label">ห้อง : </label>
+          <select class="form-control" id="room" v-model="usersdata.room" required>
+            <option v-for="item in rooms" :value="item">
+              {{item}}
+            </option>
+          </select>
         </div>
         <div class="mb-3">
           <button type="submit" class="btn btn-primary">เพิ่มผู้ใช้งาน</button>

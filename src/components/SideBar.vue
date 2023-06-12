@@ -1,4 +1,3 @@
-
 <template>
   <div class="sidebar">
     <ul class="nav flex-column">

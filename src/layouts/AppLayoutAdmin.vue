@@ -13,7 +13,7 @@ export default {
     <div>
         <Navbar/>
         <div>
-          <SideBar/>
+          <!-- <SideBar/> -->
         </div>
         <div>
           <slot></slot>
